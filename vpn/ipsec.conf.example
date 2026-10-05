@@ -1,0 +1,19 @@
+config setup
+    uniqueids=no
+
+conn VPN-REMOTE
+    keyexchange=ikev1
+    aggressive=yes
+    authby=psk
+    xauth=client
+    left=%defaultroute
+    leftsourceip=%config
+    leftauth=psk
+    leftauth2=xauth
+    xauth_identity=<VPN_USER>
+    right=200.6.93.6
+    rightauth=psk
+    rightsubnet=10.6.94.10/32
+    ike=des-sha1-modp2048
+    esp=des-sha1-modp2048
+    auto=add

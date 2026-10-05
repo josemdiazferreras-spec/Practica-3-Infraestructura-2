@@ -1,0 +1,39 @@
+! ISP - Infraestructura 2 P3
+version 15.2
+hostname ISP
+no ip domain lookup
+ip cef
+!
+interface FastEthernet0/0
+ description ENLACE-A-R1
+ ip address 200.6.93.1 255.255.255.252
+ ip nat inside
+ duplex full
+!
+interface GigabitEthernet1/0
+ description SALIDA-INTERNET-NAT0
+ ip address dhcp
+ ip nat outside
+ negotiation auto
+!
+interface GigabitEthernet2/0
+ description ENLACE-A-FORTIGATE
+ ip address 200.6.93.5 255.255.255.252
+ ip nat inside
+ negotiation auto
+!
+interface GigabitEthernet3/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet4/0
+ no ip address
+ shutdown
+!
+ip nat inside source list NAT-INTERNET interface GigabitEthernet1/0 overload
+no ip http server
+no ip http secure-server
+ip access-list extended NAT-INTERNET
+ deny ip 200.6.93.0 0.0.0.7 192.168.42.0 0.0.0.255
+ permit ip 200.6.93.0 0.0.0.7 any
+access-list 10 permit 200.6.93.0 0.0.0.7
